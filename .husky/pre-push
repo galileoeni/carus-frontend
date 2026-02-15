@@ -1,0 +1,23 @@
+
+echo '🤔🤔🤔🤔... We need to build your code before we push... 🤔🤔🤔🤔'
+npm run build ||
+(
+    echo '❌👷🔨❌ Build failed... Is your development server still running? ❌👷🔨❌
+            Next build failed: View the errors above to see why. 
+    '
+    false;
+)
+
+# pull from origin staging
+# echo '🏗️👷 Pulling updates from branch staging before pushing'
+
+# git pull origin staging --rebase ||
+# (
+#     echo '🤡😂❌🤡 Failed to pull from origin staging. 🤡😂❌🤡
+#             You should try again.'
+#     false;
+# )
+
+# # If everything passes... Now we can push
+# echo '✅✅✅✅ Pull successful... I am pushing this now. ✅✅✅✅'
+

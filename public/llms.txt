@@ -1,0 +1,32 @@
+# Carus Recycling
+Carus Recycling is a web-based platform designed to streamline waste management through effortless scheduling and a points-based rewards system.
+
+## Tech Stack
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **State/Data**: React Query (TanStack Query)
+- **Authentication**: Custom Auth Service with Google OAuth integration
+- **UI Components**: Radix UI / Shadcn UI
+- **Icons**: Lucide React
+
+## Core Functionalities
+- **Waste Scheduling**: Users can schedule pickups for specific waste types: Plastics, Electronics, and Organics.
+- **Rewards System**: Users earn points for recycling actions, redeemable for airtime, gift cards, and cash.
+- **User Roles**: 
+    - **Individuals**: Standard users scheduling residential pickups.
+    - **Businesses**: Corporate partners (Schools, Offices) with specialized waste management needs.
+- **Wallet**: A dashboard segment for managing earnings and donations.
+
+## Project Structure Notes
+- **Routing**: Uses Next.js App Router with Route Groups:
+    - `(auth)`: Contains login, register, otp-verification, and password recovery.
+    - `(dashboard-segment)`: Private routes protected by auth middleware.
+- **SEO**: Static and dynamic metadata is defined at the page level. A global `sitemap.ts` and `robots.ts` handle indexing.
+
+## API & Services
+- **Auth**: Uses a custom `useAuth` hook located in `@/services/useAuth`.
+- **Forms**: Built using `react-hook-form` with `zod` validation.
+
+## Key Links
+- [Sitemap](/sitemap.xml): List of all public-facing indexable pages.
+- [GitHub Repository](https://github.com/rahmlad-aramide/carus-frontend): Source code and issue tracking (Optional).
