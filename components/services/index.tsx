@@ -1,3 +1,4 @@
+import { BadgeDollarSign, CalendarCheck, Handshake } from "lucide-react";
 import React from "react";
 
 const Services = () => {
@@ -6,19 +7,19 @@ const Services = () => {
       title: "Donations",
       description:
         "Support our mission by making donations to help us expand our waste management initiatives.",
-      icon: "💰",
+      icon: <BadgeDollarSign className="size-10 text-green-700" />,
     },
     {
       title: "Pickup Scheduling",
       description:
         "Schedule convenient waste pickup times to ensure efficient collection and recycling.",
-      icon: "📅",
+      icon: <CalendarCheck className="size-10 text-green-700" />,
     },
     {
       title: "Business Partnerships",
       description:
         "Collaborate with us for school partnerships and other business opportunities in waste management.",
-      icon: "🤝",
+      icon: <Handshake className="size-10 text-green-700" />,
     },
   ];
 
@@ -34,7 +35,9 @@ const Services = () => {
               key={index}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="text-4xl mb-4 text-center">{service.icon}</div>
+              <div className="mb-4 flex items-center justify-center">
+                {service.icon}
+              </div>
               <h3 className="text-xl font-semibold mb-4 text-center text-gray-800">
                 {service.title}
               </h3>
