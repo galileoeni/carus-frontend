@@ -65,9 +65,13 @@ const signupSchema = z.object({
     }),
   address: z.string().optional(),
   gender: z.string().nonempty({ message: "Please select a gender" }),
-  dob: z.string().regex(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, {
-    message: "Please enter date in DD/MM/YYYY format",
-  }),
+  dob: z
+    .string()
+    .regex(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, {
+      message: "Please enter date in DD/MM/YYYY format",
+    })
+    .optional()
+    .or(z.literal("")),
   companyName: z.string().optional(),
   cac: z.string().optional(),
 });
@@ -99,6 +103,23 @@ export default function SignupForm() {
       form.reset();
       router.push(`/otp-verification?email=${variables.email}`);
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError(err: any) {
+      const msg: string = err?.response?.data?.message || err?.message || "";
+      if (
+        msg.toLowerCase().includes("email") &&
+        (msg.toLowerCase().includes("taken") ||
+          msg.toLowerCase().includes("exist") ||
+          msg.toLowerCase().includes("already"))
+      ) {
+        // Navigate back to page 1 and set the email error
+        setPage(1);
+        form.setError("email", {
+          type: "manual",
+          message: "This email is already taken. Please use a different email.",
+        });
+      }
+    },
   });
   const [showPassword, setShowPassword] = useState(false);
   const [option, setOption] = useState<"individual" | "business">("individual");
@@ -121,26 +142,28 @@ export default function SignupForm() {
       toast.info("You must accept the Terms and Conditions to proceed.");
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { option, ...rest } = values;
-    console.log("🚀 Account type:", option);
 
-    const parsedDate = parse(rest.dob, "dd/MM/yyyy", new Date());
-    if (!isValid(parsedDate)) {
-      form.setError("dob", {
-        type: "manual",
-        message: "Please enter a valid date.",
-      });
-      return;
+    let formattedDob: string | undefined = undefined;
+    if (rest.dob) {
+      const parsedDate = parse(rest.dob, "dd/MM/yyyy", new Date());
+      if (!isValid(parsedDate)) {
+        form.setError("dob", {
+          type: "manual",
+          message: "Please enter a valid date.",
+        });
+        return;
+      }
+      formattedDob = format(parsedDate, "yyyy-MM-dd");
     }
-
-    const formattedDob = format(parsedDate, "yyyy-MM-dd");
 
     const payload = {
       ...rest,
-      dob: formattedDob,
+      ...(formattedDob ? { dob: formattedDob } : {}),
       country_code: "ng",
     };
-    //@ts-expect-error dob is formatted to string
+    //@ts-expect-error payload shape matches API
     mutate(payload);
   };
 
@@ -479,7 +502,10 @@ export default function SignupForm() {
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
                           <FormLabel className="text-base font-bold">
-                            Date of Birth
+                            Date of Birth{" "}
+                            <span className="text-muted-foreground font-normal text-sm">
+                              (Optional)
+                            </span>
                           </FormLabel>
                           <Popover
                             open={openDatePicker}
@@ -653,6 +679,15 @@ export default function SignupForm() {
 
                 {page === 2 && (
                   <>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setPage(1)}
+                      className="rounded-[10px] w-full py-6 text-sm md:text-base font-bold"
+                    >
+                      ← Back
+                    </Button>
+
                     <div className="mt-3 block min-h-[1.5rem] pl-[1.5rem]">
                       <input
                         className="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"

@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/context/auth-context";
 import { SocketProvider } from "@/context/socket-context";
 import WakeServer from "@/components/wake-server";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 import { GoogleAuthProvider } from "./google-auth-provider";
 import QueryProvider from "./query-provider";
@@ -84,19 +85,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script id="tawk-to" strategy="lazyOnload">
-        {`
-          var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-          (function(){
-          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-          s1.async=true;
-          s1.src='https://embed.tawk.to/697ec1b000b4001c36a04b88/1jgbi96n2';
-          s1.charset='UTF-8';
-          s1.setAttribute('crossorigin','*');
-          s0.parentNode.insertBefore(s1,s0);
-          })();
-        `}
-      </Script>
       <Script
         id="json-ld"
         type="application/ld+json"
@@ -127,6 +115,7 @@ export default function RootLayout({
             </UserProvider>
           </GoogleAuthProvider>
           <Toaster richColors />
+          <ChatbotWidget />
         </QueryProvider>
       </body>
     </html>

@@ -13,7 +13,7 @@ import { useNotifications } from "@/queries/notifications";
 export default function SideNav() {
   const pathname = usePathname();
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const { data: notificationsData, isLoading } = useNotifications();
+  const { data: notificationsData } = useNotifications();
   const unreadCount = notificationsData?.data?.unreadCount || 0;
 
   const navLinks = [
