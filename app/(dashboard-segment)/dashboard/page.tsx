@@ -51,7 +51,7 @@ export default function Page() {
                     className="object-contain w-[20px] h-[20px] lg:h-[40px] lg:w-[40px]"
                   />
                   <p className="text-[9px] md:text-[11px] lg:text-base text-grey-90">
-                    Recycle waste
+                    Schedule dropoff
                   </p>
                 </div>
               </Link>

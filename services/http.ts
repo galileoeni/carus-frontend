@@ -65,7 +65,7 @@ http.interceptors.response.use(
         if (!originalRequest._retry && refreshToken) {
           originalRequest._retry = true;
           try {
-            const refreshResponse = await http.post("/auth/refresh", {
+            const refreshResponse = await http.post("/auth/refresh-token", {
               refreshToken,
             });
 

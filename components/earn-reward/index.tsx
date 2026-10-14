@@ -1,12 +1,16 @@
+"use client";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { Button } from "../ui/button";
 
 type EarnRewardProps = {
   onClose: () => void;
 };
 
 export default function EarnReward({ onClose }: EarnRewardProps) {
+  const router = useRouter();
   return (
     <div className="fixed inset-0 z-50 bg-black/20 flex justify-center items-center mb-5 px-2 md:px-4">
       <div className="bg-white max-h-[80vh] overflow-y-auto shadow-md w-full max-w-md md:max-w-lg xl:max-w-3xl rounded-[30px] p-8 relative xl:flex xl:items-center xl:gap-8">
@@ -72,7 +76,10 @@ export default function EarnReward({ onClose }: EarnRewardProps) {
           <Button
             type="button"
             className="w-full py-2 text-[14px] xl:text-base text-white bg-primary-60 rounded-[10px] cursor-pointer flex items-center justify-center gap-3"
-            onClick={onClose}
+            onClick={() => {
+              router.push("/schedule");
+              onClose();
+            }}
           >
             <Image
               src="/wallet-money2.png"
