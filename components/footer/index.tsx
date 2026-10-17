@@ -51,6 +51,12 @@ export default function Footer() {
             <Link href="/login" className="text-grey-90">
               Business
             </Link>
+            <Link href="/privacy" className="text-grey-90">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-grey-90">
+              Terms of Service
+            </Link>
             {/* <Link href="/#about" className="text-grey-90">
               About
             </Link>
