@@ -704,8 +704,23 @@ export default function SignupForm() {
                       </label>
                     </div>
                     <p className="mt-7 text-sm md:text-base text-[#494949]">
-                      By checking terms and conditions, you agree to Carus terms
-                      and conditions.{" "}
+                      By checking the box above, you agree to Carus&apos;{" "}
+                      <Link
+                        href="/terms"
+                        target="_blank"
+                        className="text-primary underline"
+                      >
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/privacy"
+                        target="_blank"
+                        className="text-primary underline"
+                      >
+                        Privacy Policy
+                      </Link>
+                      .
                     </p>
 
                     <Button
