@@ -33,8 +33,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="text-grey-90">
+                <Link href="/donations" className="text-grey-90">
                   Donations
+                </Link>
+              </li>
+              <li>
+                <Link href="/impact" className="text-grey-90">
+                  Impact
                 </Link>
               </li>
             </ul>
@@ -110,15 +115,7 @@ export default function Footer() {
       </div>
 
       <p className="mt-7 mb-15 text-primary-60 px-7 md:px-10 lg:px-15">
-        © Carus 2025. Developed by{" "}
-        <Link
-          href="https://rahmlad.com"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="hover:underline"
-        >
-          Rahmlad Solutions
-        </Link>
+        © Carus 2025.
       </p>
     </div>
   );
