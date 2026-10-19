@@ -12,6 +12,7 @@ export function middleware(request: NextRequest) {
     "/schedule/pickup",
     "/wallet",
     "/wallet/donate",
+    "/notifications",
     "/profile",
     "/services",
     "/contact",
@@ -27,15 +28,15 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // :path* also matches sub-pages, e.g. /wallet/donate/<id>
   matcher: [
-    "/dashboard",
-    "/schedule",
-    "/schedule/pickup",
-    "/wallet",
-    "/wallet/donate",
-    "/profile",
-    "/services",
-    "/contact",
-    "/settings",
+    "/dashboard/:path*",
+    "/schedule/:path*",
+    "/wallet/:path*",
+    "/notifications/:path*",
+    "/profile/:path*",
+    "/services/:path*",
+    "/contact/:path*",
+    "/settings/:path*",
   ],
 };
