@@ -220,7 +220,7 @@ export const DropOffForm = ({ onBack, address }: DropoffFormProps) => {
             />
 
             {/* Photos of Trash */}
-            <div className="relative -z-10">
+            <div className="relative">
               <label
                 htmlFor="photos"
                 className="text-sm md:text-base text-grey-90 font-medium"
