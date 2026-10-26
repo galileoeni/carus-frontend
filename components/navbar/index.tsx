@@ -3,10 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
 export default function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  const linkClass = (href: string) =>
+    pathname === href ? "text-primary-60 font-bold" : "text-grey-100";
 
   return (
     <header className="w-full">
@@ -26,11 +30,17 @@ export default function NavBar() {
         </div>
         {/* nav links */}
         <nav className="hidden md:flex items-center space-x-20 md:space-x-10 lg:space-x-20 xl:space-x-30">
-          <Link href="/" className="text-primary-60 font-bold">
+          <Link href="/" className={linkClass("/")}>
             Home
           </Link>
-          <Link href="#services" className="text-grey-100">
+          <Link href="/#services" className="text-grey-100">
             Services
+          </Link>
+          <Link href="/donations" className={linkClass("/donations")}>
+            Donations
+          </Link>
+          <Link href="/impact" className={linkClass("/impact")}>
+            Impact
           </Link>
           <Link href="#contact" className="text-grey-100">
             Contact
@@ -107,17 +117,33 @@ export default function NavBar() {
             <Link
               href="/"
               onClick={() => setSidebarOpen(false)}
-              className="text-primary-60 font-bold"
+              className={linkClass("/")}
             >
               Home
             </Link>
 
             <Link
-              href="#services"
+              href="/#services"
               onClick={() => setSidebarOpen(false)}
               className="text-grey-100"
             >
               Services
+            </Link>
+
+            <Link
+              href="/donations"
+              onClick={() => setSidebarOpen(false)}
+              className={linkClass("/donations")}
+            >
+              Donations
+            </Link>
+
+            <Link
+              href="/impact"
+              onClick={() => setSidebarOpen(false)}
+              className={linkClass("/impact")}
+            >
+              Impact
             </Link>
 
             <Link
