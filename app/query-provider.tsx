@@ -26,6 +26,13 @@ declare module "@tanstack/react-query" {
   }
 }
 
+// Send people back to the login for the part of the site they were using
+const loginPath = () =>
+  typeof window !== "undefined" &&
+  window.location.pathname.startsWith("/business")
+    ? "/business/login"
+    : "/login";
+
 export default function QueryProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
@@ -66,7 +73,7 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
         description: "Your session expired. You are being redirected to login.",
       });
       // give user a moment to read then redirect
-      setTimeout(() => router.push("/login"), 1200);
+      setTimeout(() => router.push(loginPath()), 1200);
     } else if (reason === "user") {
       // voluntary logout
       toast.info("Logging out.", {
@@ -76,7 +83,7 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
     } else {
       // fallback
       toast.info("Signed out", { description: "You were signed out." });
-      router.push("/login");
+      router.push(loginPath());
     }
   });
 
