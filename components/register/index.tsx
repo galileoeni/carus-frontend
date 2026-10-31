@@ -205,9 +205,8 @@ export default function SignupForm() {
               </Button>
 
               <Button
-                onClick={() => {
-                  toast.info("This is a coming soon feature!");
-                }}
+                type="button"
+                onClick={() => router.push("/business/register")}
                 className={`flex-1 rounded-full py-5 px-4 lg:px-8 text-center text-sm md:text-base hover:text-white ${
                   option === "business"
                     ? "bg-[#CCE1D7] text-[#4F4F4F]"
