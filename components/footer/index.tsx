@@ -53,7 +53,7 @@ export default function Footer() {
             >
               Contact
             </Link>
-            <Link href="/login" className="text-grey-90">
+            <Link href="/business/register" className="text-grey-90">
               Business
             </Link>
             <Link href="/privacy" className="text-grey-90">
