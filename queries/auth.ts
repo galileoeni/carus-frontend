@@ -10,6 +10,7 @@ import {
   postChangePassword,
   postResendOtp,
   postCompleteGoogleSignup,
+  postChangeSignupEmail,
 } from "@/services/auth";
 import type {
   LoginInput,
@@ -156,3 +157,13 @@ export function useCompleteGoogleSignup(
     ...options,
   });
 }
+
+export const useChangeSignupEmail = () =>
+  useMutation({
+    mutationFn: postChangeSignupEmail,
+    meta: {
+      successMessage: "Email updated",
+      additionalDescription: "We sent a new code to your new email.",
+      errorMessage: "Couldn't change your email.",
+    },
+  });
