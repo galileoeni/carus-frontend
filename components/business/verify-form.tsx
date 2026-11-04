@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useBusinessResendOtp, useBusinessVerify } from "@/queries/business";
 import cookie from "@/services/cookie";
+import ChangeSignupEmail from "@/components/auth/change-signup-email";
 
 const RESEND_AFTER_S = 60;
 
@@ -50,11 +51,24 @@ export default function BusinessVerifyForm() {
 
   return (
     <div>
-      <div className="flex items-center gap-3 rounded-xl bg-primary-10/60 p-4 mb-8">
+      <div className="flex items-center gap-3 rounded-xl bg-primary-10/60 p-4">
         <MailCheck className="size-6 text-primary-60 shrink-0" />
         <p className="text-sm">
-          We sent a 6-digit code to <span className="font-bold">{email}</span>
+          We sent a 6-digit code to{" "}
+          <span className="font-bold break-all">{email}</span>
         </p>
+      </div>
+      <div className="mt-3 mb-8">
+        <ChangeSignupEmail
+          email={email}
+          onChanged={(newEmail) => {
+            setOtp("");
+            setWait(RESEND_AFTER_S);
+            router.replace(
+              `/business/verify?email=${encodeURIComponent(newEmail)}`,
+            );
+          }}
+        />
       </div>
 
       <InputOTP

@@ -25,6 +25,8 @@ import z from "zod";
 import cookie from "@/services/cookie";
 import { useCountdown } from "@/hooks/useCountdown";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import ChangeSignupEmail from "@/components/auth/change-signup-email";
 
 const FormSchema = z.object({
   otp: z.string().min(6, {
@@ -41,6 +43,18 @@ export default function VerifyRegistrationOTP() {
     },
   });
   const { timeLeft, resetTimer } = useCountdown("otp_expiry", 10);
+
+  // Shown on the page so a mistyped address is easy to spot
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    setEmail(new URLSearchParams(window.location.search).get("email") ?? "");
+  }, []);
+  const handleEmailChanged = (newEmail: string) => {
+    setEmail(newEmail);
+    router.replace(`/otp-verification?email=${encodeURIComponent(newEmail)}`);
+    form.reset({ otp: "" });
+    resetTimer();
+  };
   const formatTime = (ms: number) => {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -112,9 +126,25 @@ export default function VerifyRegistrationOTP() {
           <div className="w-full max-w-sm mx-auto">
             <div className="flex flex-col gap-1.5">
               <h2 className="text-[28px] font-bold">OTP Verification</h2>
-              <p className="text-base text-[#494949] mb-8">
-                Enter the verification code sent to your email below.
+              <p className="text-base text-[#494949]">
+                Enter the verification code sent to{" "}
+                {email ? (
+                  <span className="font-bold text-black break-all">
+                    {email}
+                  </span>
+                ) : (
+                  "your email"
+                )}
+                .
               </p>
+              {email && (
+                <div className="mt-3 mb-8">
+                  <ChangeSignupEmail
+                    email={email}
+                    onChanged={handleEmailChanged}
+                  />
+                </div>
+              )}
             </div>
 
             <Form {...form}>

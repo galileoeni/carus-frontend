@@ -66,3 +66,12 @@ export function getAuthToken() {
 export function getAuthAccount(): AuthUser | null {
   return cookie.get("auth-user");
 }
+
+// Fix a mistyped email on an account that hasn't been verified yet
+export async function postChangeSignupEmail(body: {
+  email: string;
+  newEmail: string;
+  password: string;
+}): Promise<{ data: { email: string }; message: string }> {
+  return (await http.post("/auth/change-signup-email", body)).data;
+}
