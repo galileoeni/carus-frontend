@@ -28,6 +28,10 @@ export interface BusinessProfile {
   wasteTypes: MaterialValue[];
   estimatedMonthlyKg: number | null;
   createdAt: string;
+  // Branches see pickups and data, not payments
+  isBranch: boolean;
+  branchName: string | null;
+  hq: { companyName: string } | null;
 }
 
 export interface BusinessAccount {
@@ -120,16 +124,84 @@ export interface CollectedPickup {
   adminNote: string | null;
 }
 
+export interface BusinessData {
+  summary: {
+    totalKg: number;
+    pickups: number;
+    plasticKg: number;
+    co2AvoidedKg: number;
+    byMaterial: { material: string; kg: number }[];
+    months: { month: string; kg: number; pickups: number }[]; // YYYY-MM
+  };
+  pickups: CollectedPickup[];
+}
+
 export interface BusinessDataResponse extends GeneralResponse {
+  data: BusinessData;
+}
+
+/* ---------- Locations (HQ and branches) ---------- */
+
+export interface BusinessLocation {
+  id: string; // the location's account id
+  name: string; // "Head office" or the branch name
+  address: string;
+  city: string;
+  totalKg: number;
+  pickups: number;
+  lastPickup: string | null;
+  nextPickup: string | null;
+  plan: SchedulePlan | null;
+}
+
+export interface BranchLocation extends BusinessLocation {
+  contact: { name: string; email: string; phone: string };
+  status: string;
+  joinedAt: string;
+}
+
+export interface BranchInvite {
+  id: string;
+  token: string;
+  branchName: string | null;
+  expiresAt: string;
+  createdAt: string;
+}
+
+export interface BranchesResponse extends GeneralResponse {
   data: {
-    summary: {
-      totalKg: number;
-      pickups: number;
-      plasticKg: number;
-      co2AvoidedKg: number;
-      byMaterial: { material: string; kg: number }[];
-      months: { month: string; kg: number; pickups: number }[]; // YYYY-MM
-    };
-    pickups: CollectedPickup[];
+    hq: BusinessLocation;
+    branches: BranchLocation[];
+    invites: BranchInvite[];
   };
 }
+
+export interface BranchDetailResponse extends GeneralResponse {
+  data: BusinessData & {
+    branch: {
+      id: string;
+      name: string;
+      address: string;
+      city: string;
+      contact: { name: string; email: string; phone: string };
+      joinedAt: string;
+    };
+    plan: SchedulePlan | null;
+    upcoming: BusinessPickup[];
+  };
+}
+
+export interface BranchInviteInfoResponse extends GeneralResponse {
+  data: {
+    companyName: string;
+    industry: IndustryValue;
+    wasteTypes: MaterialValue[];
+    branchName: string | null;
+    expiresAt: string;
+  };
+}
+
+export type JoinBranchInput = Omit<
+  BusinessRegisterInput,
+  "companyName" | "industry" | "cacNumber" | "wasteTypes"
+> & { branchName: string; wasteTypes?: string[] };

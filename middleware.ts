@@ -5,6 +5,7 @@ const BUSINESS_PORTAL = [
   "/business/dashboard",
   "/business/schedule",
   "/business/data",
+  "/business/locations",
   "/business/payments",
   "/business/reports",
 ];

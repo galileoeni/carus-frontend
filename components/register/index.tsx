@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { ErrorAlert } from "@/components/error-component";
 import { GoogleButton } from "@/app/(auth)/google-auth/google-button";
 import { format, parse, isValid } from "date-fns";
+import LogoLink from "@/components/shared/logo-link";
 
 const signupSchema = z.object({
   option: z.enum(["individual", "business"]),
@@ -172,7 +173,7 @@ export default function SignupForm() {
       {/* flex form and bg image */}
       <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col py-10 bg-white">
         {/* Logo */}
-        <Link href="/" className="px-3 md:px-5 mb-15">
+        <LogoLink className="px-3 md:px-5 mb-15">
           <Image
             aria-hidden
             src="/logo.png"
@@ -181,7 +182,7 @@ export default function SignupForm() {
             height={32}
             className="w-[117px] h-[32px]"
           />
-        </Link>
+        </LogoLink>
 
         <div className="flex-1 flex items-center justify-center px-4 sm:px-5 md:px-20">
           <div className="w-full max-w-sm">

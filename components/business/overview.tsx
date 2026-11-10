@@ -3,11 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  BarChart3,
   CalendarPlus,
   CheckCircle2,
   Circle,
   CloudOff,
   FileText,
+  MapPin,
   Recycle,
   Truck,
   Wallet,
@@ -31,6 +33,7 @@ const greeting = () => {
 export default function BusinessOverview() {
   const account = useBusinessAccount();
   const business = account.business;
+  const isBranch = !!business?.isBranch;
   const schedule = useBusinessSchedule().data?.data;
   const next = schedule?.upcoming.find(
     (p) => p.status === "scheduled" || p.status === "requested",
@@ -44,7 +47,8 @@ export default function BusinessOverview() {
       label: "First collection",
       done: !!schedule?.past.some((p) => p.status === "completed"),
     },
-    { label: "First payout to your bank", done: false },
+    // Payouts go to the head office, so branches skip this step
+    ...(isBranch ? [] : [{ label: "First payout to your bank", done: false }]),
   ];
   const doneCount = onboarding.filter((s) => s.done).length;
 
@@ -56,7 +60,13 @@ export default function BusinessOverview() {
       value: formatKg(summary?.totalKg ?? 0, { tonnes: true }),
       icon: Recycle,
     },
-    { label: "Earned", value: "₦0", icon: Wallet },
+    isBranch
+      ? {
+          label: "Plastic recycled",
+          value: formatKg(summary?.plasticKg ?? 0, { tonnes: true }),
+          icon: Recycle,
+        }
+      : { label: "Earned", value: "₦0", icon: Wallet },
     {
       label: "CO₂ avoided",
       value: formatKg(summary?.co2AvoidedKg ?? 0, { tonnes: true }),
@@ -151,12 +161,19 @@ export default function BusinessOverview() {
             title: "Quick schedule",
             body: "Book an extra pickup",
           },
-          {
-            href: "/business/payments",
-            icon: Wallet,
-            title: "Payout account",
-            body: "Where we send your money",
-          },
+          isBranch
+            ? {
+                href: "/business/data",
+                icon: BarChart3,
+                title: "Pickup data",
+                body: "What we've collected",
+              }
+            : {
+                href: "/business/locations",
+                icon: MapPin,
+                title: "Locations",
+                body: "Add your other branches",
+              },
           {
             href: "/business/reports",
             icon: FileText,
@@ -202,6 +219,9 @@ export default function BusinessOverview() {
           <h2 className="text-lg font-black">Business details</h2>
           <dl className="mt-5 grid sm:grid-cols-2 gap-x-10 gap-y-4 text-sm">
             {[
+              ...(isBranch
+                ? [["Branch of", business.hq?.companyName ?? "Head office"]]
+                : []),
               ["Industry", industryLabel(business.industry)],
               ["Pickup address", `${business.address}, ${business.city}`],
               [

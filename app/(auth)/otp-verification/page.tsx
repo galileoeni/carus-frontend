@@ -27,6 +27,7 @@ import { useCountdown } from "@/hooks/useCountdown";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ChangeSignupEmail from "@/components/auth/change-signup-email";
+import LogoLink from "@/components/shared/logo-link";
 
 const FormSchema = z.object({
   otp: z.string().min(6, {
@@ -113,13 +114,15 @@ export default function VerifyRegistrationOTP() {
     <div className="flex min-h-screen">
       <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col py-10 bg-white">
         <div className="px-3 md:px-5 mb-15">
-          <Image
-            aria-hidden
-            src="/logo.png"
-            alt="Carus Logo"
-            width={117}
-            height={32}
-          />
+          <LogoLink className="inline-flex">
+            <Image
+              aria-hidden
+              src="/logo.png"
+              alt="Carus Logo"
+              width={117}
+              height={32}
+            />
+          </LogoLink>
         </div>
 
         <div className="flex-1 flex px-5 md:px-20">

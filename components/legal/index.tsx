@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import Footer from "@/components/footer";
+import LogoLink from "@/components/shared/logo-link";
 
 export const LEGAL_CONTACT_EMAIL = "carusrecycling@gmail.com";
 export const LEGAL_LAST_UPDATED = "17 October 2026";
@@ -29,7 +30,7 @@ export function LegalPage({
   return (
     <div>
       <header className="w-full px-7 md:px-10 mt-5 max-w-screen-xl mx-auto flex items-center justify-between">
-        <Link href="/" className="flex">
+        <LogoLink className="flex">
           <Image
             aria-hidden
             src="/logo.png"
@@ -38,7 +39,7 @@ export function LegalPage({
             height={64}
             className="w-[117px] h-[32px]"
           />
-        </Link>
+        </LogoLink>
         <Link href="/" className="text-primary-60 font-bold text-sm">
           ← Back to home
         </Link>

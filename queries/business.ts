@@ -1,6 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
+  deleteBranchInvite,
+  getBranchDetail,
+  getBranches,
+  getBranchInviteInfo,
+  postBranchInvite,
+  postJoinBranch,
   getBusinessData,
   getBusinessMe,
   getBusinessSchedule,
@@ -87,3 +93,52 @@ export const useCancelPickup = () =>
 
 export const useBusinessData = () =>
   useQuery({ queryKey: ["business-data"], queryFn: getBusinessData });
+
+/* ---------- Locations ---------- */
+
+export const useBranches = () =>
+  useQuery({ queryKey: ["business-branches"], queryFn: getBranches });
+
+export const useBranchDetail = (id: string) =>
+  useQuery({
+    queryKey: ["business-branch", id],
+    queryFn: () => getBranchDetail(id),
+  });
+
+export const useCreateBranchInvite = () =>
+  useMutation({
+    mutationFn: postBranchInvite,
+    meta: {
+      invalidatesQuery: ["business-branches"],
+      successMessage: "Sign-up link created",
+      additionalDescription: "Copy it and send it to the location.",
+      errorMessage: "Couldn't create the link.",
+    },
+  });
+
+export const useRevokeBranchInvite = () =>
+  useMutation({
+    mutationFn: deleteBranchInvite,
+    meta: {
+      invalidatesQuery: ["business-branches"],
+      successMessage: "Link cancelled",
+      errorMessage: "Couldn't cancel the link.",
+    },
+  });
+
+export const useBranchInviteInfo = (token: string) =>
+  useQuery({
+    queryKey: ["branch-invite", token],
+    queryFn: () => getBranchInviteInfo(token),
+    retry: false,
+  });
+
+export const useJoinBranch = () =>
+  useMutation({
+    mutationFn: postJoinBranch,
+    meta: {
+      successMessage: "Branch account created",
+      additionalDescription: "We've emailed you a 6-digit code.",
+      errorMessage: "Couldn't create your account.",
+    },
+  });

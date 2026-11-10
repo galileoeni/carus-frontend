@@ -9,6 +9,7 @@ import React, { useState } from "react";
 
 import { httpLogout } from "@/services/http";
 import { useNotifications } from "@/queries/notifications";
+import LogoLink from "@/components/shared/logo-link";
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -50,7 +51,7 @@ export default function SideNav() {
       >
         <div>
           <div className="pt-8 md:pt-10 px-5 md:px-12">
-            <Link href="/">
+            <LogoLink>
               <Image
                 aria-hidden
                 src="/logo.png"
@@ -59,7 +60,7 @@ export default function SideNav() {
                 height={64}
                 className="w-[88px] md:w-[117px] h-[24px] md:h-[32px]"
               />
-            </Link>
+            </LogoLink>
           </div>
 
           <nav className="flex flex-col justify-center space-y-8 mt-8 md:mt-15 pl-4 pr-2 md:px-8">
