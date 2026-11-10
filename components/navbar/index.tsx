@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
+import LogoLink from "@/components/shared/logo-link";
 
 export default function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function NavBar() {
       <div className="hidden md:flex justify-between items-center px-10 mt-5 max-w-screen-xl mx-auto">
         {/* Logo */}
         <div className="flex items-center gap-x-30 md:gap-x-20 lg:gap-x-30 xl:gap-x-40">
-          <Link href="/" className="flex">
+          <LogoLink className="flex">
             <Image
               aria-hidden
               src="/logo.png"
@@ -26,7 +27,7 @@ export default function NavBar() {
               height={64}
               className="w-[117px] h-[32px]"
             />
-          </Link>
+          </LogoLink>
         </div>
         {/* nav links */}
         <nav className="hidden md:flex items-center space-x-20 md:space-x-10 lg:space-x-20 xl:space-x-30">
@@ -68,13 +69,15 @@ export default function NavBar() {
 
       <div className="md:hidden fixed top-0 left-0 w-full z-50 bg-white">
         <div className="flex justify-between items-center px-5 py-4">
-          <Image
-            src="/logo.png"
-            alt="Carus Logo"
-            width={117}
-            height={32}
-            className="w-[117px] h-[32px]"
-          />
+          <LogoLink className="inline-flex">
+            <Image
+              src="/logo.png"
+              alt="Carus Logo"
+              width={117}
+              height={32}
+              className="w-[117px] h-[32px]"
+            />
+          </LogoLink>
 
           <button
             onClick={() => setSidebarOpen(true)}
@@ -97,13 +100,15 @@ export default function NavBar() {
         `}
         >
           <div className="flex justify-between items-center px-5 mt-5 w-full">
-            <Image
-              src="/logo.png"
-              alt="Carus Logo"
-              width={117}
-              height={32}
-              className="w-[117px] h-[32px]"
-            />
+            <LogoLink className="inline-flex">
+              <Image
+                src="/logo.png"
+                alt="Carus Logo"
+                width={117}
+                height={32}
+                className="w-[117px] h-[32px]"
+              />
+            </LogoLink>
 
             <button
               onClick={() => setSidebarOpen(false)}

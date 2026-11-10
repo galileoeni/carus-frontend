@@ -25,6 +25,8 @@ import { ErrorAlert } from "@/components/error-component";
 import cookie from "@/services/cookie";
 import { toast } from "sonner";
 import { GoogleButton } from "@/app/(auth)/google-auth/google-button";
+import LogoLink from "@/components/shared/logo-link";
+import AccountTypeSwitch from "@/components/shared/account-type-switch";
 
 const loginSchema = z.object({
   email: z.email({ message: "Invalid email address" }),
@@ -80,14 +82,16 @@ export default function LoginForm() {
         <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col py-10 bg-white">
           {/* Logo */}
           <div className="px-3 md:px-5 mb-15">
-            <Image
-              aria-hidden={false}
-              src="/logo.png"
-              alt="Carus Logo"
-              width={117}
-              height={32}
-              className="w-[117px] h-[32px]"
-            />
+            <LogoLink className="inline-flex">
+              <Image
+                aria-hidden={false}
+                src="/logo.png"
+                alt="Carus Logo"
+                width={117}
+                height={32}
+                className="w-[117px] h-[32px]"
+              />
+            </LogoLink>
           </div>
 
           <div className="flex-1 flex items-center justify-center px-7 md:px-20">
@@ -96,7 +100,9 @@ export default function LoginForm() {
                 {" "}
                 Hi, Welcome Back! 👋{" "}
               </h1>
-              <p className="text-gray text-base mb-10">You have been missed!</p>
+              <p className="text-gray text-base mb-6">You have been missed!</p>
+
+              <AccountTypeSwitch active="individual" />
 
               <Form {...form}>
                 <form

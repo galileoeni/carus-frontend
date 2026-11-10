@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForgotPassword } from "@/queries/auth";
 import { ErrorAlert } from "@/components/error-component";
+import LogoLink from "@/components/shared/logo-link";
 
 const schema = z.object({
   contact: z
@@ -74,14 +75,16 @@ export default function ForgotPassword() {
       <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col py-10 bg-white">
         {/* Logo */}
         <div className="px-3 md:px-5 mb-15">
-          <Image
-            aria-hidden
-            src="/logo.png"
-            alt="Carus Logo"
-            width={117}
-            height={32}
-            className="w-[117px] h-[32px]"
-          />
+          <LogoLink className="inline-flex">
+            <Image
+              aria-hidden
+              src="/logo.png"
+              alt="Carus Logo"
+              width={117}
+              height={32}
+              className="w-[117px] h-[32px]"
+            />
+          </LogoLink>
         </div>
 
         <div className="flex-1 flex px-5 md:px-20">

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import BusinessAuthShell from "@/components/business/auth-shell";
 import BusinessLoginForm from "@/components/business/login-form";
+import AccountTypeSwitch from "@/components/shared/account-type-switch";
 
 export const metadata: Metadata = {
   title: "Business Login",
@@ -24,6 +25,7 @@ export default function BusinessLoginPage() {
         </>
       }
     >
+      <AccountTypeSwitch active="business" />
       <BusinessLoginForm />
     </BusinessAuthShell>
   );

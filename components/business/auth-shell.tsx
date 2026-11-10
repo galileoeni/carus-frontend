@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeCheck, CalendarClock, FileText, Wallet } from "lucide-react";
 
 import { BUSINESS_AUTH_VIDEO, MATERIALS } from "@/lib/business";
+import LogoLink from "@/components/shared/logo-link";
 
 const FLOATERS = [
   { left: 8, size: 44, delay: 0, duration: 18, spin: 40 },
@@ -110,7 +110,7 @@ export default function BusinessAuthShell({
     <section className="min-h-svh flex">
       <div className="w-full lg:w-1/2 flex flex-col bg-white">
         <div className="px-5 md:px-10 py-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <LogoLink className="flex items-center gap-2">
             <Image
               src="/logo.png"
               alt="Carus Logo"
@@ -121,7 +121,7 @@ export default function BusinessAuthShell({
             <span className="text-xs font-bold uppercase tracking-widest text-primary-60 bg-primary-10 rounded-full px-2 py-0.5">
               Business
             </span>
-          </Link>
+          </LogoLink>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-5 md:px-10 pb-10">

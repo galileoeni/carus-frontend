@@ -1,12 +1,13 @@
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import LogoLink from "@/components/shared/logo-link";
 
 export default function ComingSoonPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-800 p-4">
       <header className="mb-8 flex flex-col justify-center items-center gap-2">
-        <Link href="/" className="flex">
+        <LogoLink className="flex">
           <Image
             aria-hidden
             src="/logo.png"
@@ -15,7 +16,7 @@ export default function ComingSoonPage() {
             height={64}
             className="w-[117px] h-[32px]"
           />
-        </Link>
+        </LogoLink>
         <h1 className="text-4xl font-extrabold text-primary">
           Carus Recycling
         </h1>

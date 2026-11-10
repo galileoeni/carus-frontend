@@ -29,6 +29,7 @@ import { useCompleteGoogleSignup } from "@/queries/auth";
 import { ErrorAlert } from "@/components/error-component";
 import { Calendar } from "@/components/ui/calendar";
 import cookie from "@/services/cookie";
+import LogoLink from "@/components/shared/logo-link";
 
 const authSchema = z.object({
   phone: z
@@ -98,14 +99,16 @@ export default function Page() {
         <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col py-10 bg-white">
           {/* Logo */}
           <div className="px-3 md:px-5 mb-15">
-            <Image
-              aria-hidden={false}
-              src="/logo.png"
-              alt="Carus Logo"
-              width={117}
-              height={32}
-              className="w-[117px] h-[32px]"
-            />
+            <LogoLink className="inline-flex">
+              <Image
+                aria-hidden={false}
+                src="/logo.png"
+                alt="Carus Logo"
+                width={117}
+                height={32}
+                className="w-[117px] h-[32px]"
+              />
+            </LogoLink>
           </div>
 
           <div className="flex-1 flex items-center justify-center px-7 md:px-20">
