@@ -11,6 +11,7 @@ import {
   FileText,
   LayoutDashboard,
   LogOut,
+  MapPin,
   Menu,
   Wallet,
   X,
@@ -34,16 +35,30 @@ export const PORTAL_NAV = [
   { href: "/business/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/business/schedule", label: "Schedule", icon: CalendarClock },
   { href: "/business/data", label: "Pickup data", icon: BarChart3 },
-  { href: "/business/payments", label: "Payments", icon: Wallet },
+  {
+    href: "/business/locations",
+    label: "Locations",
+    icon: MapPin,
+    hqOnly: true,
+  },
+  { href: "/business/payments", label: "Payments", icon: Wallet, hqOnly: true },
   { href: "/business/reports", label: "Reports", icon: FileText },
 ];
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({
+  isBranch,
+  onNavigate,
+}: {
+  isBranch: boolean;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
+  // Branches see pickups and data; locations and payments belong to HQ
+  const links = PORTAL_NAV.filter((link) => !(isBranch && link.hqOnly));
   return (
     <nav className="space-y-1">
-      {PORTAL_NAV.map(({ href, label, icon: Icon }) => {
-        const active = pathname === href;
+      {links.map(({ href, label, icon: Icon }) => {
+        const active = pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
             key={href}
@@ -93,11 +108,19 @@ function Sidebar({
         <p className="mt-1 font-bold leading-tight truncate">
           {account.business?.companyName ?? "Your business"}
         </p>
+        {account.business?.isBranch && (
+          <p className="text-xs font-bold text-primary-20 truncate">
+            {account.business.branchName ?? "Branch"}
+          </p>
+        )}
         <p className="text-xs text-white/60 truncate">{account.email}</p>
       </div>
 
       <div className="mt-6 flex-1">
-        <NavLinks onNavigate={onNavigate} />
+        <NavLinks
+          isBranch={!!account.business?.isBranch}
+          onNavigate={onNavigate}
+        />
       </div>
 
       <button

@@ -1,5 +1,9 @@
 import http from "./http";
 import type {
+  BranchDetailResponse,
+  BranchInviteInfoResponse,
+  BranchesResponse,
+  JoinBranchInput,
   BusinessDataResponse,
   BusinessMeResponse,
   BusinessScheduleResponse,
@@ -49,4 +53,40 @@ export async function postCancelPickup(id: string): Promise<GeneralResponse> {
 
 export async function getBusinessData(): Promise<BusinessDataResponse> {
   return (await http.get("/business/data")).data;
+}
+
+/* ---------- Locations ---------- */
+
+export async function getBranches(): Promise<BranchesResponse> {
+  return (await http.get("/business/branches")).data;
+}
+
+export async function getBranchDetail(
+  id: string,
+): Promise<BranchDetailResponse> {
+  return (await http.get(`/business/branches/${id}`)).data;
+}
+
+export async function postBranchInvite(body: {
+  branchName?: string;
+}): Promise<GeneralResponse> {
+  return (await http.post("/business/branch-invites", body)).data;
+}
+
+export async function deleteBranchInvite(id: string): Promise<GeneralResponse> {
+  return (await http.delete(`/business/branch-invites/${id}`)).data;
+}
+
+export async function getBranchInviteInfo(
+  token: string,
+): Promise<BranchInviteInfoResponse> {
+  return (await http.get(`/business/join/${encodeURIComponent(token)}`)).data;
+}
+
+export async function postJoinBranch({
+  token,
+  ...body
+}: JoinBranchInput & { token: string }): Promise<GeneralResponse> {
+  return (await http.post(`/business/join/${encodeURIComponent(token)}`, body))
+    .data;
 }

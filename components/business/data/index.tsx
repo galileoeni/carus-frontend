@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { CloudOff, Images, Recycle, Scale, Truck } from "lucide-react";
 
@@ -14,7 +14,7 @@ import {
   WINDOW_LABELS,
 } from "@/lib/business";
 import { useBusinessData } from "@/queries/business";
-import type { CollectedPickup } from "@/types/business";
+import type { BusinessData, CollectedPickup } from "@/types/business";
 import PhotoViewer from "./photo-viewer";
 
 function PickupCard({
@@ -99,21 +99,6 @@ function PickupCard({
 
 export default function BusinessData() {
   const { data, isLoading, error } = useBusinessData();
-  const [month, setMonth] = useState<string>("all");
-  const [viewer, setViewer] = useState<{
-    photos: string[];
-    index: number;
-    caption: string;
-  } | null>(null);
-
-  const result = data?.data;
-  const pickups = useMemo(
-    () =>
-      (result?.pickups ?? []).filter(
-        (p) => month === "all" || p.date.startsWith(month),
-      ),
-    [result, month],
-  );
 
   if (isLoading) {
     return (
@@ -122,13 +107,44 @@ export default function BusinessData() {
       </div>
     );
   }
-  if (error || !result) {
+  if (error || !data?.data) {
     return (
       <p className="text-red-500 py-20 text-center">
         We couldn&apos;t load your pickup data. Please refresh the page.
       </p>
     );
   }
+  return (
+    <BusinessDataView
+      result={data.data}
+      title="Pickup data"
+      subtitle="Everything collected from your business, recorded by the Carus team."
+    />
+  );
+}
+
+// Totals, materials and collections. Also used by HQ to view a branch.
+export function BusinessDataView({
+  result,
+  title,
+  subtitle,
+}: {
+  result: BusinessData;
+  title: ReactNode;
+  subtitle: ReactNode;
+}) {
+  const [month, setMonth] = useState<string>("all");
+  const [viewer, setViewer] = useState<{
+    photos: string[];
+    index: number;
+    caption: string;
+  } | null>(null);
+
+  const pickups = useMemo(
+    () =>
+      result.pickups.filter((p) => month === "all" || p.date.startsWith(month)),
+    [result, month],
+  );
 
   const { summary } = result;
   const thisMonth = summary.months[0];
@@ -137,7 +153,7 @@ export default function BusinessData() {
   if (summary.pickups === 0) {
     return (
       <div>
-        <h1 className="text-2xl md:text-3xl font-black">Pickup data</h1>
+        <h1 className="text-2xl md:text-3xl font-black">{title}</h1>
         <div className="mt-6 rounded-[22px] bg-white border border-primary-10 p-10 md:p-14 text-center flex flex-col items-center">
           <div className="size-16 rounded-2xl bg-primary-10 text-primary-60 flex items-center justify-center">
             <Scale className="size-8" />
@@ -180,10 +196,8 @@ export default function BusinessData() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl md:text-3xl font-black">Pickup data</h1>
-        <p className="text-grey-40 mt-1">
-          Everything collected from your business, recorded by the Carus team.
-        </p>
+        <h1 className="text-2xl md:text-3xl font-black">{title}</h1>
+        <p className="text-grey-40 mt-1">{subtitle}</p>
       </div>
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
